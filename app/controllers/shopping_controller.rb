@@ -2,10 +2,8 @@ class ShoppingController < ApplicationController
    def index
     @shops = Shop.all
   end
-  def index
-    @shops = Shop.all
-  end
-  def shows
+ 
+  def show
     @shop = Shop.find_by(id: params['id'])
   end
 
@@ -24,9 +22,23 @@ class ShoppingController < ApplicationController
   end
 
   def update
+    shop = Shop.find_by(id: params['id'])
+    if shop.update_attributes(permit)
+      @msg = 'Salvo com sucessso!'
+    else
+      @msg = shop.errors.messages
+
+    end
   end
 
   def destroy
+    shop = Shop.find_by(id: params['id'])
+    if shop.destroy
+      @msg = 'Apagado com sucessso!'
+    else
+      @msg = shop.errors.messages
+
+    end
   end
 
   private
